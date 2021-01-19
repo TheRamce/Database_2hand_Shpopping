@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}Edit movie{% endblock %}
+{% block content %}
+
+<br>
+<div style="text-align: center;">
+    
+
+    <form action="" method="post" name="product_edit" enctype="multipart/form-data" style="background-color:rgba(192, 192, 192, 0.356);border-radius: 10px;"> 
+      
+     
+      <div class="form-group mx-sm-3 mb-2" style="padding:4% 20%;">
+        <h1 class="title">Edit Product</h1>
+            <label for="name" class="label">Name</label>
+            <input type="text" name="name" class="form-control" required="required"/>
+          
+            {% if 'Name' in values.errors %}
+            <p class="help has-background-warning">
+                {{ values.errors['name'] }}
+            </p>
+            {% endif %} 
+        
+
+          
+            <label for="price" class="label">Price(TL)</label>
+            <input type="number" name="price" class="form-control" required="required"/>
+            
+            {% if 'Price' in values.errors %}
+            <p class="help has-background-warning">
+                {{ values.errors['price'] }}
+            </p>
+            {% endif %} 
+          
+            <label for="description" class="label">Description</label>
+            <input type="text" name="description" class="form-control" required="required"/>
+            
+            {% if 'title' in values.errors %}
+            <p class="help has-background-warning">
+                {{ values.errors['title'] }}
+            </p>
+            {% endif %} 
+          
+
+            <label for="p_type" class="label">Select Type</label>
+            <select name="p_type" id="p_type" class="form-control">
+            {% for dep in types%}
+            <option value='{{ dep.idProductType }}' class="form-control">{{ dep.category }}</option>
+            {% endfor %}
+            </select>
+        
+          </br>
+          <div class="custom-file">
+            <input type="file" id="a_photo" name="a_photo" accept="image/png, image/jpeg, image/jpg" class="custom-file-input" required="required" >
+            <label class="custom-file-label" for="a_photo">Choose picture</label>
+          </div>
+          <br><br>
+          <button class="btn btn-primary">Save</button>
+      </div>
+
+
+    </form>
+  </div>
+{% endblock %}

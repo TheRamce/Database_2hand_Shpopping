@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}List Requests{% endblock %}
+{% block content %}
+    {% if session.loggedin %}
+    <h1 style="text-align: center;">Requests</h1>
+  <table class="table">
+      <thead class="thead-light">
+        <tr>
+        
+          <th scope="col">Name</th>
+          <th scope="col">Price(TL)</th>
+          <th scope="col">Sender Name</th>
+          <th scope="col">Inspect</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for ap in dic%}
+
+        <tr>
+
+          <td>{{ap.productName}}</td>
+          <td>{{ap.price}}</td>
+          <td>{{ap.userName}} {{ap.userSurnaName}} </td>
+          <td>
+            <a href="{{ url_for('listRequst',userId=ap.senderId,prodId=ap.idProduct) }}" class="btn btn-primary">
+
+              <span>&#8594;</span> </td>
+            </a>
+        </tr>
+
+
+    
+          {% endfor %}
+       
+      </table>       
+    
+   
+    {% endif %}
+  {% endblock %}

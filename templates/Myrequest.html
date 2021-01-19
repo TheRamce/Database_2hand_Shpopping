@@ -1,0 +1,126 @@
+{% extends "layout.html" %}
+{% block title %}Request Product{% endblock %}
+{% block content %}
+    <h1 class="title" style="text-align: center;">Requested Product</h1>
+    <br>
+
+    <table class="table  table-striped">
+      <tr>
+        <th>Name:</th>
+        <td>{{product.name}}</td>
+      </tr>
+     
+      <tr>
+        <th>Price(TL):</th>
+        <td> {{product.price}} </td>
+      </tr>
+      <tr>
+        <th>Type:</th>
+        <td> {{product.price}} </td>
+      </tr>
+      <tr>
+        <th>Description:</th>
+        <td> {{product.description}}</td>
+      </tr>
+
+
+      <tr>
+        <th>Status:</th>
+        {%if product.isSold==0%}
+            {%if stat == 1%}
+            
+            <td> Accepted</td>
+          </tr>
+          <tr>
+            <th>Owner Info:</th>
+            <td> <b> Mail= </b> {{user.mail}} <b>Phone= </b>{{user.phone}}
+               </td>
+            
+
+          </tr>
+           
+            {% endif %}
+            {%if stat ==0%}
+            <td> Rejected By user</td>
+            {% endif %}
+            {%if stat ==2%}
+            <td> Pending</td>
+            {% endif %}
+
+
+         </tr>
+     </table>
+     <form action="" method="post" name="product_edit" >
+      
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="btn btn-danger">Delete Request</button>
+        </div>
+        {%else%}
+            {%if stat ==3%}
+                <td> You Bought this FROM {{user.name}} {{user.surName}} </td>
+
+              </tr>
+
+            </table>
+            {% if  comment == None %}
+              
+                <form name="myform4" action="{{ url_for('commentProduct',userId=session.id,prodId=product.id) }}" method="GET" style="text-align: center;">
+                  <button class="btn btn-primary">Comment</button>
+                </form>
+              {% else %}
+
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    
+                    <th scope="col">Comment</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+
+                  <tr>
+                    <td>  {{comment.commentProduct}}</td>
+                    <td>  {{comment.star}}/5   </td>
+                     <td>    {{comment.Ptime}}  </td>
+                     <td>
+
+                      <a href="{{ url_for('edit_comment',product_key=product.id,senderId=session.id) }}"  style="float: left;" class="btn btn-primary">
+
+                        <span>&#8594;</span> 
+                      </a>
+                    </td>  
+                      <td>
+
+                        <a href="{{ url_for('delete_comment',product_key=product.id,senderId=session.id) }}"  style="float: left;" class="btn btn-danger">
+  
+                          <span>&#8594;</span> 
+                        </a>
+                      </td>    
+                  </tr>
+                </tbody>
+              </table> 
+
+             
+            {% endif %}
+            {%else%}   
+            <td><b>  Not available </b> </td>
+          </tr>
+
+        </table>
+            
+            {% endif %}
+         
+
+
+        {% endif %}
+
+     
+
+   
+{% endblock %}

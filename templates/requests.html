@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    {% if session.loggedin %}
+   <h3 style="text-align: center;">My Requests</h3>
+   <br>
+   <h5>Rejected Table</h5>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+        
+          <th scope="col">Name</th>
+          <th scope="col">Price(TL)</th>
+          <th scope="col">Status</th>
+          <th scope="col">Inspect</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in products %}
+        {% if p.status==0  %}
+                {% set product_key=p.id%}
+                
+                  
+
+                    <tr>
+                      <td>{{p.name}}</td>
+                      <td> {{p.price}}</td>
+
+                      <td>
+                        
+                            rejected
+                      
+                      </td>
+                      <td>
+                      <a href="{{ url_for('requestedProduct',product_key=product_key) }}"  style="float: right;" class="btn btn-primary">
+
+                        <span>&#8594;</span> 
+                      </a>
+                    </td>
+                    </tr>     
+        {% endif %}      
+            
+       {% endfor %}
+      </tbody>
+    </table>  
+
+
+
+    <br>   
+    <h7 style="float:right">Total:{{stat[0]}}</h7>  
+    <br>
+    <h5>Accepted Table</h5>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+        
+          <th scope="col">Name</th>
+          <th scope="col">Price(TL)</th>
+          <th scope="col">Status</th>
+          <th scope="col">Inspect</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in products %}
+        {% if p.status==1  %}
+                {% set product_key=p.id%}
+
+                    <tr>
+                      <td>{{p.name}}</td>
+                      <td> {{p.price}}</td>
+                      <td>accepted</td>
+                      <td>
+                      <a href="{{ url_for('requestedProduct',product_key=product_key) }}"  style="float: right;"class="btn btn-primary">
+
+                      <span>&#8594;</span> 
+                      </a>
+
+                    </td>
+                      
+                    </tr>     
+        {% endif %}      
+            
+       {% endfor %}
+      </tbody>
+    </table>   
+    <br>
+    <h7 style="float:right">Total:{{stat[1]}}</h7>  
+
+    <br>
+    <h5>Pending Table</h5>
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+        
+          <th scope="col">Name</th>
+          <th scope="col">Price(TL)</th>
+          <th scope="col">Status</th>
+          <th scope="col">Inspect</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in products %}
+        {% if p.status==2  %}
+                {% set product_key=p.id%}
+                
+                  
+
+                    <tr>
+                      <td>{{p.name}}</td>
+                      <td> {{p.price}}</td>
+
+                      <td>
+                     
+                            pending
+                       
+
+                      </td>
+                      <td>
+                      <a href="{{ url_for('requestedProduct',product_key=product_key) }}" style="float: right;" class="btn btn-primary">
+
+                        <span>&#8594;</span> 
+                      </a>
+                    </td>
+                    </tr>     
+        {% endif %}      
+            
+       {% endfor %}
+      </tbody>
+    </table>  
+    <br>
+     <h7 style="float:right">Total:{{stat[2]}}</h7>  
+
+     <br>
+    <h5>Bought Table</h5>
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+        
+          <th scope="col">Name</th>
+          <th scope="col">Price(TL)</th>
+          <th scope="col">Status</th>
+          <th scope="col">Inspect</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for p in products %}
+        {% if p.status== 3 %}
+                {% set product_key=p.id%}
+                    <tr>
+                      <td>{{p.name}}</td>
+                      <td> {{p.price}}</td>
+
+                      <td>Bought</td>
+                      <td>
+                      <a href="{{ url_for('requestedProduct',product_key=product_key) }} " style="float: right;" class="btn btn-primary">
+
+                        <span>&#8594;</span> 
+                      </a>
+                    </td>
+                    </tr>     
+        {% endif %}      
+            
+       {% endfor %}
+      </tbody>
+    </table>  
+    <br>
+     <h7 style="float:right">Total:{{stat[3]}}</h7>  
+     <br>
+
+
+
+    {% endif %}
+      
+  {% endblock %}

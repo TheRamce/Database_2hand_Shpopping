@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+  <br>
+  
+  <form action="{{ url_for('homepage')}}", method = "GET">
+    <input type="submit" class="btn btn-success float-right" style="margin-bottom: 3px;" value="Reset">
+  </form>
+<form action="{{url_for('homepage')}}" method = "POST">
+    <div class="form-group">
+        <label for="type">Type:</label>
+        <select name="type" id="type" class = "form-control">
+            <option value='all'>All</option>
+            {% for typ in types%}
+            <option value='{{ typ.idProductType }}'>{{ typ.category }}</option>
+            {% endfor %}
+        </select>
+        
+    </div>
+    <input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+
+  {% if session.loggedin %}
+  
+      {%if products %}
+     
+      <div class="row justify-content-center">
+        {% for p in products %}
+            {% set product_key=p.id%}
+            
+              <div class="card  " style="width: 15rem; margin: 2%;">
+                <img class="card-img-top " src="{{p.photo}}" alt="Card image cap" style="height:200px ; width: 14.9rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{p.name}}</h5>
+                  <p class="card-text">{{p.price}} TL</p>
+                  <a href="{{ url_for('reqProduct',product_key=product_key) }}" class="btn btn-primary">Inspect Product</a>
+                </div>
+              </div>
+           
+       
+        {% endfor %}
+      </div>
+      
+      {% endif %}
+   
+  {% endif %}
+   
+     
+     
+  
+
+     
+{% endblock %}

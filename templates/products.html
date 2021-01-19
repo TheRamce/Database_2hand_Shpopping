@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}My Products{% endblock %}
+{% block content %}
+    <h4 style="text-align: center;">My Products</h4>
+
+    {% if session.loggedin %}
+    <form action="" method="post" name="movie_list" style="background-color:rgba(192, 192, 192, 0.356);border-radius: 10px;">
+
+              <div class="row justify-content-center">
+                {% for p in products %}
+                    {% set product_key=p.id%}
+                    
+                      <div class="card  " style="width: 15rem; margin: 2%;">
+                        <img class="card-img-top " src="{{p.photo}}" alt="Card image cap" style="height:200px ; width: 14.9rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">{{p.name}}</h5>
+                          <p class="card-text">{{p.price}} TL</p>
+                          <label class="checkbox"> 
+                            <input type="checkbox" name="product_key" value="{{ product_key}}"/>
+                            Delete Product
+                          </label>
+                          <a href="{{ url_for('product',product_key=product_key) }}" class="btn btn-primary">Inspect Product</a>
+                        </div>
+                      </div>
+                   
+               
+                {% endfor %}
+
+               
+              </div>
+        
+              <h5  style="text-align: center;">
+                <button  class="btn btn-primary ">Delete</button>
+
+
+              </h5>
+            
+        
+            
+             
+            
+         
+        </form>
+    
+    {% endif %}
+      
+{% endblock %}    

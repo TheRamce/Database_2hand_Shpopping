@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block title %}Product{% endblock %}
+{% block content %}
+
+<h1 class="title">User Info</h1>
+        <div id="displ1">
+                            <table class="table table-striped" style="background-color: rgba(219, 218, 218, 0.247);">
+                                <tr>
+                                    <th>Name Surname:</th>
+                                    <td>{{user.name}} {{user.surName}}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <th>Mail:</th>
+                                    <td> {{user.mail}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone:</th>
+                                    <td> {{user.phone}}  </td>
+                                    
+                                </tr>
+                                
+                            </table>
+
+    </div>
+       
+
+        
+        <form action="" method="post" name="product_edit" enctype="multipart/form-data"  style="background-color:rgba(192, 192, 192, 0.356);border-radius: 10px;"> 
+                <div id="disp2" class="form-group mx-sm-3 mb-2" style="padding:2% 20%; display: none;">
+                        <label for="name">Edit Name</label>
+                        <input type="text" name="name" id="name" value="{{user.name}}" required="required" class="form-control">
+
+                        <label for="sname">Edit Name</label>
+                        <input type="text" name="sname" id="sname" value="{{user.surName}}" required="required" class="form-control">
+
+                        <label for="mail">Edit Mail</label>
+                        <input type="text" name="mail" id="mail" value="{{user.mail}}" required="required" class="form-control">
+                    
+                        <label for="phone">Edit Phone</label>
+                        <input type="text" name="phone" id="mail" value="{{user.phone}} " required="required" class="form-control">
+                
+
+                        <br>
+                        <div style="text-align: center;">
+
+                           
+                              <button class="btn btn-primary">Commit</button>
+                        </div>
+                    </div>
+             
+        </form>
+        
+
+        <button id="editbtn" class="btn btn-success" style="float: right;" value="Edit">Edit</button>
+        <a href="{{ url_for('user_delete_User') }}" id="deleteb" class="btn btn-danger" style="display: none;"> Delete Account</a>
+       
+       <script>
+
+            let btnAdd = document.querySelector('#editbtn');
+            let btn=document.querySelector('#deleteb');
+            let d1 = document.querySelector('#displ1');
+            let d2 = document.querySelector('#disp2');
+    
+            btnAdd.addEventListener('click', () => {
+              if(d2.style.display=="none"){
+                d2.style.display="block"
+                btn.style.display="inline"
+                d1.style.display="none"
+    
+              }
+              else{
+                d2.style.display="none"
+                btn.style.display="none"
+                d1.style.display="block"
+    
+              }});
+    
+    
+    
+      </script>
+
+{% endblock %}

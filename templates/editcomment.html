@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Product{% endblock %}
+{% block content %}
+<h1>comment</h1>
+<form action="" method="post" name="product_edit" enctype="multipart/form-data" > 
+
+
+
+    <label for="comment">Edit name</label>
+    <input type="text" name="comment" id="comment" value="{{comment.commentProduct}}" required="required" class="form-control">
+    <br>
+
+    <label for="str">Star</label>
+    <input type="number" name="star" id="star" value="{{comment.star}}" required="required" class="form-control" max="5" min="0">
+    <br>
+
+
+   
+
+  <br>
+  <div style="text-align: center;">
+
+    <div class="control">
+      <button class="btn btn-primary">Commit</button>
+    </div>
+
+
+  </div>
+
+  </form>
+  
+  
+  {% endblock %}

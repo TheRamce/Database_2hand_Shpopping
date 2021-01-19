@@ -1,0 +1,7 @@
+DEBUG = True
+PORT = 8080
+#9mrBory%T$XnJ3*L
+SQL_HOST=''
+SQL_HOST1='localhost'
+PASSWORD=''
+PASSWORD1=''

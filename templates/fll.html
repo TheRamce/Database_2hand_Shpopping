@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+function showFileName() {
+   var fil = document.getElementById("myFile").files[0]
+  
+   console.log(fil);
+}
+</script>
+
+
+
+</head>
+<body>
+<form id="frmMain" name="frmMain"  enctype="application/x-www-form-urlencoded" webkitdirectory multiple>
+    <input type="file" id="myFile" name="myFile"/>
+    <a href="#" onclick="showFileName()">Show Name</a>
+</form>
+</body>
+</html>

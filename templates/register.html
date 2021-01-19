@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+ {% block title %}Register{% endblock %}
+ {% block content %}               
+</br>
+{% if '!!!' in msg %}
+    <div class="alert alert-danger" role="alert">
+      Incorrect <a href="#" class="alert-link">{{msg}}</a>. 
+    </div>
+    {% endif %}
+<div class="word" style="text-align: center;"> 
+  
+   <form action="{{ url_for('register') }}" method="post"style="background-color:rgba(192, 192, 192, 0.356);border-radius: 10px;" > 
+        
+      <div class="form-group mx-sm-3 mb-2" style="padding:2% 20%;">
+        <h1>Register</h1>
+       <input id="username" name="username" type="text" placeholder="Enter Your name" class="form-control" required="required" style="margin-bottom: 4px;"/>
+       <input id="surname" name="surname" type="text" placeholder="Enter Your Surname" class="form-control" required="required" style="margin-bottom: 4px;"/> 
+       <input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="form-control" required="required" style="margin-bottom: 4px;"/>
+       <input id="phone" name="phone" type="text" placeholder="Enter Your phone number" class="form-control" required="required" style="margin-bottom: 4px;"/>
+       <input id="password" name="password" type="password" placeholder="Enter Your Password" class="form-control" required="required" style="margin-bottom: 7px;"/>
+       <input type="submit" class="btn btn-primary" value="Sign Up"></br> 
+      </div>
+
+      </form> 
+   </div> 
+
+{% endblock %}       

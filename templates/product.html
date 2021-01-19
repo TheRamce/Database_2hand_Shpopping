@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block title %}Product{% endblock %}
+{% block content %}
+
+
+    <h1 class="title" style="text-align: center;">Product</h1>
+    
+    <div id="disp2">
+
+
+        
+      <table class="table table-striped">
+        <tr>
+          <th>Name:</th>
+          <td>{{product.name}}</td>
+        </tr>
+      
+        <tr>
+          <th>Price:</th>
+          <td> {{product.price}}</td>
+        </tr>
+        <tr>
+          <th>Description:</th>
+          <td> {{product.description}}</td>
+        </tr>
+
+        <tr>
+          <th>Status:</th>
+          {%if product.isSold == 1%}
+          <td> Sold</td>
+          {% endif %}
+          {%if product.isSold ==0%}
+          <td> Not Sold</td>
+          {% endif %}
+
+        </tr>
+
+          
+      </table>
+
+      <br><br>
+          <div class="row justify-content-center ml-1" style="width: 99%;" >
+      
+            {% for p in ps %}
+              <a href="#">
+                <img src="{{p.url}}"  class="border rounded img-fluid ml-2" style="width: 13.8rem; height: 13.5rem ;">
+              </a>
+            {% endfor %}
+            
+     
+          </div>
+
+      
+          <br>
+
+    
+    
+    </div>
+          
+
+
+    
+      <div id="displ1" style="display: none;">
+
+             
+        <form action="" method="post" name="product_edit" enctype="multipart/form-data" > 
+
+
+
+            <label for="name">Edit name</label>
+            <input type="text" name="name" id="name" value="{{product.name}}" required="required" class="form-control">
+            <br>
+
+            <label for="price">Edit price (TL)</label>
+            <input type="number" name="price" id="price" value="{{product.price}}" required="required" class="form-control">
+            <br>
+
+
+            <label for="description">Edit Description</label>
+            <textarea name="description" id="description" cols="30" rows="10"class="form-control" required="required" >{{product.description}} </textarea>
+
+          <div class="custom-file">
+            
+
+            <input type="file" id="a_photo" name="a_photo" accept="image/png, image/jpeg, image/jpg" class="custom-file-input">
+            <label class="custom-file-label" for="a_photo">choose Picture</label>
+          </div> 
+
+          <br>
+          <div style="text-align: center;">
+
+            <div class="control">
+              <button class="btn btn-primary">Commit</button>
+            </div>
+
+
+          </div>
+  
+          </form>
+
+            
+      </div> 
+      <br> 
+      <button id="editbtn" class="btn btn-primary" style="float: right;">Edit</button>
+    <br>   
+           
+     
+
+         
+
+  <script>
+
+        let btnAdd = document.querySelector('#editbtn');
+        let d1 = document.querySelector('#displ1');
+        let d2 = document.querySelector('#disp2');
+
+        btnAdd.addEventListener('click', () => {
+          if(d2.style.display=="none"){
+            d2.style.display="block"
+            d1.style.display="none"
+
+          }
+          else{
+            d2.style.display="none"
+            d1.style.display="block"
+
+          }});
+
+
+
+  </script>
+{% endblock %}

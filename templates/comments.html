@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}Comments{% endblock %}
+{% block content %}
+
+
+<h3 style="text-align: center;">list of the Comments</h3>
+<br>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Comment</th>
+      <th scope="col">Rate</th>
+      <th scope="col">Time</th>
+   
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    {% if session.loggedin %}
+   
+        
+        {% for d in dict %}
+        
+                <tr>
+                 
+
+                  
+                        <td>  {{d.userName}} {{d.userSurnaName}} </td>
+                        <td>  {{d.commentProduct}} </td>
+                        <td>  {{d.star}}/5   </td>
+                         <td>    {{d.Ptime}}  </td> 
+                         
+                        
+                       
+                    
+                </tr>
+           
+          {% endfor %}
+        {% endif %}
+      </tbody>
+  </table>   
+ 
+  {% endblock %}

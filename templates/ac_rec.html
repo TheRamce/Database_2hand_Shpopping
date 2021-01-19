@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block title %}Product{% endblock %}
+{% block content %}
+    <h1 class="title" style="text-align: center;">Accept Or Reject</h1>
+
+    <table class="table table-striped">
+      <tr>
+        <th>Name:</th>
+        <td>{{product.name}}</td>
+      </tr>
+     
+      <tr>
+        <th>Price(TL):</th>
+        <td> {{product.price}}</td>
+      </tr>
+      <tr>
+        <th>Description:</th>
+        <td> {{product.description}}</td>
+      </tr>
+      
+      
+
+      <tr>
+        <th>Sender Name:</th>
+        <td> {{user.name}}</td>
+      </tr>
+      <tr>
+        <th>Sender mail:</th>
+        <td> {{user.mail}}</td> 
+      </tr>
+      {% if product.isSold ==1 %}
+      <tr>
+        <th>Product Status:</th>
+        <th>Sold</th>
+      </tr>
+      <tr>
+        {% endif %}
+        <th>Sender Status:</th>
+        {%if product.Pstat ==1 %}
+            <td> Accepted </td>
+        {% elif product.Pstat ==2 %}
+            <td> Pending</td>
+        {% elif product.Pstat ==0  %}
+        <td> Rejected</td>
+        {%else %}
+        <td>Sold to Sender </td>
+        {% endif %}
+      </tr>
+
+    
+    
+    
+     
+    </table>
+    <br>
+    {% for p in ps %}
+              <a href="#">
+                <img src="{{p.url}}"  class="border rounded img-fluid ml-2" style="width: 13.8rem; height: 13.5rem ;">
+              </a>
+            {% endfor %}
+
+    {%if product.Pstat !=3 and product.isSold !=1 %}
+        <div class="row justify-content-center">
+
+          <form name="myform1" action="{{ url_for('acceptRequest',userId=user.id,prodId=product.id) }}" method="POST" style="margin: 3px;">
+            <input type="submit" name="accept" id="accept" value="Accept" class="btn btn-primary">
+        </form>
+
+        <form name="myform2" action="{{ url_for('rejectRequest',userId=user.id,prodId=product.id) }}" method="POST" style="margin: 3px">
+            <input type="submit" name="reject" id="reject" value="Reject" class="btn btn-primary">
+        </form>
+
+        <form name="myform3" action="{{ url_for('sellProduct',userId=user.id,prodId=product.id) }}" method="POST" style="margin: 3px;">
+          <input type="submit" name="sell" id="sell" value="Sell" class="btn btn-primary">  
+      </form>
+
+        </div>
+            
+      {% endif %}
+        
+
+ 
+{% endblock %}

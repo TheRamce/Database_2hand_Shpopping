@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block title %}Product{% endblock %}
+{% block content %}
+
+<h1 class="title">Product</h1>
+    
+        <table class="table table-striped" style="background-color: rgba(219, 218, 218, 0.247);">
+            <tr>
+                <th>Name:</th>
+                <td>{{product.name}}</td>
+            </tr>
+            
+            <tr>
+                <th>Price:</th>
+                <td> {{product.price}}</td>
+            </tr>
+            <tr>
+                <th>Owner:</th>
+                <td> {{user.name}} {{user.surName}} </td>
+                
+            </tr>
+             
+            <tr>
+                <th>Description:</th>
+                <td> {{product.description}}</td>
+            </tr>
+            <tr>
+                <th>Status:</th>
+                {%if product.isSold == 1%}
+                <td> Sold</td>
+                {% endif %}
+                {%if product.isSold ==0%}
+                <td> Not Sold</td>
+                {% endif %}
+
+            </tr>
+    
+        </table>
+        <div class="row justify-content-center ml-1" style="width: 99%;" >
+          {% for p in photos %}
+          <img src="{{p.url}}" alt="" class="rounded img-fluid ml-2 " style="width: 13.8rem; height: 13.5rem ;">
+          {% endfor %}
+
+
+        </div>
+        <br>
+    {% if req == None%}
+    <form action="" method="post" name="product_edit" >
+      
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="btn btn-primary">Request</button>
+        </div>
+
+      </div>
+    </form>
+    {% else %}
+
+    <div class="alert alert-success" role="alert">
+      You requested already Check status from MY REQUESTS
+    </div>
+    {% endif %}
+
+{% endblock %}
