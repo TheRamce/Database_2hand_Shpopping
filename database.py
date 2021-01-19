@@ -33,7 +33,7 @@ class Database:
         cursor = self.dbfile.connection.cursor() 
         cursor.execute('SELECT * FROM usertable  WHERE idUser = % s', (key, )) 
         dic=cursor.fetchone()
-        user=User(idUser=dic['idUser'],userName=dic['userName'],userSurnaName=dic['userSurnaName'],userMail=dic['userMail'],userPhone=dic['userPhone'])
+        user=User(idUser=dic['idUser'],userName=dic['userName'],userSurnaName=dic['userSurnaName'],userMail=dic['userMail'],userPhone=dic['userPhone'],Ppassword=dic['userPassword'])
         return user
 
     def set_user_info(self,username, surname, email,password,phone):
@@ -55,11 +55,13 @@ class Database:
 
     def get_Product(self,key):
         cursor = self.dbfile.connection.cursor() 
-        cursor.execute('SELECT userId,productName, price,description,isSold FROM producttable  WHERE idProduct = % s', (key, ))
+        cursor.execute('''SELECT userId,productName, price,description,isSold,category,idProductType FROM producttable INNER JOIN 
+                            producttype ON typeId=idProductType
+                            WHERE idProduct=% s''', (key, ))
         dic=cursor.fetchone() 
         
         
-        product=Product(PidUser=dic['userId'],Pid=key,Pname=dic['productName'],Pprice=dic['price'],Pdescription=dic[ 'description'],PisSold=dic['isSold'])
+        product=Product(PidUser=dic['userId'],Pid=key,Pname=dic['productName'],Pprice=dic['price'],Pdescription=dic[ 'description'],PisSold=dic['isSold'],Ptype=dic[ 'category'])
         return product
 
 
@@ -244,7 +246,13 @@ class Database:
 
     def list_my_comments(self,userId):
         cursor = self.dbfile.connection.cursor()
-        cursor.execute("SELECT UserId , productId, commentProduct,star,Ptime,userName,userSurnaName FROM commenttable INNER JOIN usertable ON commenttable.UserId= usertable.idUser where productId in (select idProduct from producttable where userId = %s)",(userId,))
+        #cursor.execute("SELECT UserId , productId, commentProduct,star,Ptime,userName,userSurnaName FROM commenttable INNER JOIN usertable ON commenttable.UserId= usertable.idUser where productId in (select idProduct from producttable where userId = %s)",(userId,))
+        cursor.execute('''SELECT producttable.productName,producttable.UserId , productId, commentProduct,star,commenttable.Ptime,userName,userSurnaName FROM commenttable 
+                INNER JOIN usertable ON commenttable.UserId= usertable.idUser 
+                INNER JOIN producttable ON productId=producttable.idProduct
+                where productId in (select idProduct from producttable where producttable.userId = %s)
+                        ''',(userId,))
+
         return cursor.fetchall()
 
     def get_my_comment(self,proId,userId):
@@ -278,15 +286,16 @@ class Database:
         cursor = self.dbfile.connection.cursor() 
         cursor.execute('SELECT statusProduct,count(*) as Nstat  FROM requesttable where senderId=%s group by statusProduct',(sender,))
         stat=[0,0,0,0]
+         
         lst= cursor.fetchall()
         for i in range(len(lst)):
             index=int(lst[i]['statusProduct'])
             stat[index]=int(lst[i]['Nstat'])
         return stat
 
-    def update_product(self,name,price,desc,key):
+    def update_product(self,name,price,desc,key,typ):
         cursor = self.dbfile.connection.cursor()
-        cursor.execute("UPDATE  producttable set productName=%s , price=%s , description=%s where idProduct =%s",(name,price,desc,key,))
+        cursor.execute("UPDATE  producttable set productName=%s , price=%s , description=%s ,typeId=%s where idProduct =%s",(name,price,desc,typ,key,))
         self.dbfile.connection.commit()
 
     def update_user(self,name,sname,mail,phone,idUser):
@@ -311,12 +320,13 @@ class Database:
         cursor = self.dbfile.connection.cursor() 
         cursor.execute('''SELECT * FROM producttable 
         INNER JOIN usertable ON producttable.userId= usertable.idUser 
+        Inner Join producttype ON producttype.idProductType=producttable.typeId
         where idProduct = % s''', (prodId, ))
         dic=cursor.fetchone() 
         
         
         user=User(idUser=dic['idUser'],userName=dic['userName'],userSurnaName=dic['userSurnaName'],userMail=dic['userMail'],userPhone=dic['userPhone'])
-        product=Product(Pid=prodId,Pname=dic['productName'],Pprice=dic['price'],Pdescription=dic[ 'description'],PisSold=dic['isSold'],PidUser=dic['idUser'])
+        product=Product(Pid=prodId,Pname=dic['productName'],Pprice=dic['price'],Pdescription=dic[ 'description'],PisSold=dic['isSold'],PidUser=dic['idUser'],Ptype=dic['category'])
         
         
         return product,user
@@ -333,5 +343,11 @@ class Database:
         cursor.execute("DELETE FROM commenttable where UserId =%s and productId=%s;",(senderId,product_key,))
         self.dbfile.connection.commit()
 
+
+    def update_user_w_p(self,name,sname,mail,phone,idUser,password):
+        
+        cursor = self.dbfile.connection.cursor()
+        cursor.execute("UPDATE usertable SET userName =%s , userSurnaName=%s , userMail=%s ,userPhone=%s,userPassword= %s where idUser= %s  ",(name,sname,mail,phone,password,idUser,))
+        self.dbfile.connection.commit()
 
     

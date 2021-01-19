@@ -157,18 +157,20 @@ def product(product_key):
     phto=mysql.getPhoto(product_key)
     st="data:image/png;base64,"
     link=[]
+    types_=mysql.get_types()
     for i in range (len(phto)):
         imgg=base64.b64encode(phto[i]['photo']).decode("utf-8")
         a=st+str(imgg)
         p=Photo(phto[i]['idPhoto'],a)
         link.append(p)
     if request.method == "GET":
-        return render_template("product.html",product=product_,ps=link)
+        return render_template("product.html",product=product_,ps=link,types=types_)
     else:
         name=request.form['name']
         price=request.form['price']
         desc=request.form['description']
-        mysql.update_product(name,price,desc,product_key)
+        typ=request.form['type']
+        mysql.update_product(name,price,desc,product_key,typ)
         
         if  request.files['a_photo'] :
             
@@ -295,7 +297,7 @@ def  edit_comment(product_key,senderId):
         mysql=current_app.config["db"]
         if request.method == "GET":
             comment_=mysql.get_my_comment(product_key,senderId)
-            print(comment_)
+         
             return render_template("editcomment.html",comment=comment_)
     
         else:
@@ -373,13 +375,19 @@ def get_update_User():
     if request.method =="GET":
         
         user_=mysql.get_user_with_id(session['id'])
+        
         return render_template("user.html",user=user_)
     elif request.method =="POST":
         name=request.form['name']
         sname=request.form['sname']
         mail=request.form['mail']
         phone=request.form['phone']
-        mysql.update_user(name,sname,mail,phone,session['id'])
+        password=request.form['password']
+        if ('XXXX' in password) :
+            mysql.update_user(name,sname,mail,phone,session['id'])
+        else:
+            password=hash_password(password)
+            mysql.update_user_w_p(name,sname,mail,phone,session['id'],password)
         return   redirect(url_for("get_update_User"))
 
 def user_delete_User():

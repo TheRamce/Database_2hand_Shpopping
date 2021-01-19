@@ -74,6 +74,17 @@
             <label for="price">Edit price (TL)</label>
             <input type="number" name="price" id="price" value="{{product.price}}" required="required" class="form-control">
             <br>
+            <label for="type">Type:</label>
+            <select name="type" id="type" class = "form-control">
+              
+              {% for typ in types%}
+                {% if typ.category == product.type %}
+                  <option value='{{ typ.idProductType }}' selected>{{ typ.category }}</option>
+                {% else %}
+                <option value='{{ typ.idProductType }}' >{{ typ.category }}</option>
+                {% endif %}
+              {% endfor %}
+            </select>
 
 
             <label for="description">Edit Description</label>

@@ -2,6 +2,6 @@ DEBUG = True
 PORT = 8080
 #9mrBory%T$XnJ3*L
 SQL_HOST=''
-SQL_HOST1='localhost'
+SQL_HOST1=''
 PASSWORD=''
 PASSWORD1=''

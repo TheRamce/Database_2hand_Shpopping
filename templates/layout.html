@@ -53,10 +53,13 @@
             
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="{{url_for('login')}}">Log in</a>
+              {% if not session.loggedin %}
               <a class="dropdown-item" href="{{url_for('register')}}">Sign In</a>
+              {% endif %}
               <a class="dropdown-item" href="{{ url_for('logout') }}">Log Out</a>
+              {% if  session.loggedin %}
               <a class="dropdown-item" href="{{ url_for('get_update_User') }}">My Account</a>
-              
+              {% endif %}
             </div>
            
           </li>
